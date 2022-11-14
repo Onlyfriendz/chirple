@@ -1,8 +1,8 @@
 const { API_KEY } = require("./key.js");
 const { sleep } = require("./utils.js");
 
-const MAX_COUNT = 10;
-const TOTAL_ROUNDS = 1;
+const MAX_COUNT = 30;
+const TOTAL_ROUNDS = 3;
 const ROUND_DELAY = 3000;
 
 async function postCall(keyword, startDate, endDate, nextToken) {
@@ -39,8 +39,5 @@ async function scrape(keyword, startDate, endDate) {
   }
   return allTweets;
 }
-
-postCall("gun");
-
 
 module.exports = { scrape };
