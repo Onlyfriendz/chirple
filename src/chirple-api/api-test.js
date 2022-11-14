@@ -1,6 +1,6 @@
 const { scrape } = require("./api.js");
 
-async function test() {
+async function scrapeTest() {
   const keyword = "zoukout";
   const startDate = null;
   const endDate = null;
@@ -8,4 +8,4 @@ async function test() {
   console.log(result);
 }
 
-test();
+scrapeTest();
