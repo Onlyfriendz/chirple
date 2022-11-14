@@ -1,6 +1,11 @@
-const { getTotal, getGeneralSentiments, get3MostLikedPosts, getNumberSentiments } = require("./analysis");
+const {
+  getTotal,
+  getGeneralSentiments,
+  get3MostLikedPosts,
+  getNumberSentiments,
+} = require("./analysis");
 
-const { scrape } = require("./api.js", "./analysis.js");
+const { scrape } = require("./api.js");
 const { timeAnalysis } = require("./time-analysis");
 
 async function scrapeTest() {
@@ -49,4 +54,3 @@ async function testTime() {
 }
 
 scrapeTest();
-
