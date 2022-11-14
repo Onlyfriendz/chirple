@@ -1,4 +1,5 @@
 const { scrape } = require("./api.js");
+const { timeAnalysis } = require("./time-analysis");
 
 async function scrapeTest() {
   const keyword = "zoukout";
@@ -8,4 +9,11 @@ async function scrapeTest() {
   console.log(result);
 }
 
-scrapeTest();
+
+async function testTime() {
+  const result = await scrape("zoukout", null, null);
+  console.log(timeAnalysis(result));
+}
+
+testTime();
+
