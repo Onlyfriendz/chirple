@@ -16,14 +16,13 @@ async function postCall(keyword) {
   });
 
   const result = await request.json();
-
-  console.log(result);
+  return result;
+  
 }
 
-postCall("gun");
-
-
-function getTotal(object) {
+ function 
+getTotal(object) {
+  
   totalFavorites = 0;
   totalRetweets = 0;
   totalQuoteCount = 0;
@@ -58,3 +57,8 @@ function getSentimentScore(subObject) {
 
   return score / (subObjectLength)
 }
+async function test(){
+  total = getTotal(await postCall("gun"));
+  console.log(total);
+}
+test();
