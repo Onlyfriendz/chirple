@@ -1,7 +1,7 @@
 const fs = require("fs");
 const { sleep } = require("./utils.js");
 
-const MAX_COUNT = 10;
+const MAX_COUNT = 30;
 const TOTAL_ROUNDS = 3;
 const ROUND_DELAY = 3000;
 
@@ -44,13 +44,4 @@ async function scrape(keyword, startDate, endDate) {
   return allTweets;
 }
 
-async function test() {
-  const keyword = "gun";
-  const next_token =
-    "scroll:thGAVUV0VFVBaCwNDZ1JyXmCwWgsDR5a2vl5gsEnEV9IJ6FYCJehgEVVNFUjUBFQIVAAA=";
-  // const result = await scrape(keyword);
-  const result = await scrape(keyword);
-  console.log(result);
-}
-
-test();
+module.exports = { scrape };
