@@ -35,10 +35,6 @@ function getTotal(object) {
   return [totalFavorites, totalRetweets, totalQuoteCount];
 }
 
-function getMostLikedPost(object) {
-
-}
-
 function getGeneralSentiments(object) {
   score = 0;
   objectLength = object.length
@@ -58,3 +54,4 @@ function getSentimentScore(subObject) {
 
   return score / (subObjectLength)
 }
+
