@@ -1,10 +1,9 @@
-import { Grid, Typography, Box } from "@mui/material";
+import { Grid, Typography, Box, Button } from "@mui/material";
 import React, {useState} from 'react'
-import { useEffect } from "react";
 import { get3MostLikedPosts, getGeneralSentiments, getNumberSentiments, getTotal } from "../../chirple-api/analysis.js";
 import { scrape } from "../../chirple-api/api.js";
 import { timeAnalysis } from "../../chirple-api/time-analysis.js";
-import { Card, Title, DonutChart } from '@tremor/react';
+import { Card, Title, DonutChart, Metric, Text, LineChart } from '@tremor/react';
 import '@tremor/react/dist/esm/tremor.css';
 import "./Dashboard.css"
 
@@ -41,15 +40,15 @@ const DashBoard = (props) => {
     const cities = [
       {
           name: 'Positive',
-          sales: sentimentTweets[0],
+          sales: 23,
       },
       {
           name: 'Negative',
-          sales: sentimentTweets[1],
+          sales: 12,
       },
       {
           name: 'Neutral',
-          sales: sentimentTweets[2],
+          sales: 5,
       },
   ];
   
@@ -57,12 +56,38 @@ const DashBoard = (props) => {
       `$ ${Intl.NumberFormat('us').format(number).toString()}`
   );
 
+  const chartdata = [
+    {
+      year: 1951,
+      "Population growth rate": 1.74,
+    },
+    {
+      year: 1952,
+      "Population growth rate": 1.93,
+    },
+    {
+      year: 1953,
+      "Population growth rate": 1.9,
+    },
+    {
+      year: 1954,
+      "Population growth rate": 1.98,
+    },
+    {
+      year: 1955,
+      "Population growth rate": 2,
+    },
+  ];
+  
+  const dataFormatter = (number) =>
+    `${Intl.NumberFormat("us").format(number).toString()}%`;
+
 
 
   return (
-    <Grid container border={1} spacing={6} justifyContent="center" alignItems="center" padding={10}
+    <Grid containery spacing={6} justifyContent="center" alignItems="center" padding={10}
       direction="column">
-      <Box item lg={8} border={1}>
+      <Box item lg={8} >
         <form onSubmit={handleSubmit}>
           <input
           id="keywordInput"
@@ -73,20 +98,57 @@ const DashBoard = (props) => {
         </form>
       </Box>
 
-      <Box item width={500} border={1}>
-        <Typography>{keywords}</Typography>
-        <Card maxWidth="max-w-lg">
-          <Title>Sales by City</Title>
-          <DonutChart
-              data={ cities }
-              category="sales"
-              dataKey="name"
-              valueFormatter={ valueFormatter }
-              marginTop="mt-6"
-              colors={["slate", "violet", "indigo", "rose", "cyan", "amber"]}
-          />
-        </Card>
-      </Box>
+      <Grid container item width={1200} direction="row">
+        <Grid item xs={12} sm={4} >
+          <Card maxWidth="max-w-xs" decoration="top" decorationColor="indigo">
+            <Text>Favorites</Text>
+            <Metric>172</Metric>
+          </Card>
+        </Grid>
+        <Grid item xs={12} sm={4} >
+          <Card maxWidth="max-w-xs" decoration="top" decorationColor="indigo">
+            <Text>ReTweets</Text>
+            <Metric>34</Metric>
+          </Card>
+        </Grid>
+        <Grid item xs={12} sm={4} >
+          <Card maxWidth="max-w-xs" decoration="top" decorationColor="indigo">
+            <Text>Quotes</Text>
+            <Metric>23</Metric>
+          </Card>
+        </Grid>
+      </Grid>
+
+      <Grid container item width={1200} direction="row">
+        <Grid item xs={12} sm={4} >
+          <Card maxWidth="max-w-lg">
+            <Title>Sales by City</Title>
+            <DonutChart
+                data={ cities }
+                category="sales"
+                dataKey="name"
+                valueFormatter={ valueFormatter }
+                marginTop="mt-6"
+                colors={["slate", "violet", "indigo", "rose", "cyan", "amber"]}
+            />
+          </Card>
+        </Grid>
+        <Grid item xs={12} sm={8} >
+          <Card>
+            <Title>Population growth rate (1951 to 2021)</Title>
+            <LineChart
+              data={chartdata}
+              dataKey="year"
+              categories={["Population growth rate"]}
+              colors={["blue"]}
+              valueFormatter={dataFormatter}  
+              marginTop="mt-6"         
+              yAxisWidth="w-10"
+            />
+          </Card>
+        </Grid>
+      </Grid>
+
     </Grid>
   );
 };
