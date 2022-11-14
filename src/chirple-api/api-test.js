@@ -53,4 +53,4 @@ async function testTime() {
   console.log(timeAnalysis(result));
 }
 
-scrapeTest();
+testTime();

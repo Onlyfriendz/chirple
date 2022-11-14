@@ -37,7 +37,7 @@ const DashBoard = (props) => {
         setTimeGraph(timeAnalysis(allTweets));
     };
 
-    const cities = [
+    const sentiTweets = [
       {
           name: 'Positive',
           sales: sentimentTweets[0],
@@ -53,37 +53,14 @@ const DashBoard = (props) => {
   ];
   
   const valueFormatter = (number) => (
-      `$ ${Intl.NumberFormat('us').format(number).toString()}`
+      ` ${Intl.NumberFormat('us').format(number).toString()}`
   );
-
-  const chartdata = [
-    {
-      year: 1951,
-      "Population growth rate": 1.74,
-    },
-    {
-      year: 1952,
-      "Population growth rate": 1.93,
-    },
-    {
-      year: 1953,
-      "Population growth rate": 1.9,
-    },
-    {
-      year: 1954,
-      "Population growth rate": 1.98,
-    },
-    {
-      year: 1955,
-      "Population growth rate": 2,
-    },
-  ];
   
   const dataFormatter = (number) =>
     `${Intl.NumberFormat("us").format(number).toString()}%`;
 
   return (
-    <Grid containery spacing={6} justifyContent="center" alignItems="center" padding={10}
+    <Grid container spacing={6} justifyContent="center" alignItems="center" padding={10}
       direction="column">
       <Box item lg={8} >
         <form onSubmit={handleSubmit}>
@@ -100,19 +77,19 @@ const DashBoard = (props) => {
         <Grid item xs={12} sm={4} >
           <Card maxWidth="max-w-xs" decoration="top" decorationColor="indigo">
             <Text>Favorites</Text>
-            <Metric>172</Metric>
+            <Metric>{totalData[0]}</Metric>
           </Card>
         </Grid>
         <Grid item xs={12} sm={4} >
           <Card maxWidth="max-w-xs" decoration="top" decorationColor="indigo">
             <Text>ReTweets</Text>
-            <Metric>34</Metric>
+            <Metric>{totalData[1]}</Metric>
           </Card>
         </Grid>
         <Grid item xs={12} sm={4} >
           <Card maxWidth="max-w-xs" decoration="top" decorationColor="indigo">
             <Text>Quotes</Text>
-            <Metric>23</Metric>
+            <Metric>{totalData[2]}</Metric>
           </Card>
         </Grid>
       </Grid>
@@ -120,9 +97,9 @@ const DashBoard = (props) => {
       <Grid container item width={1200} direction="row">
         <Grid item xs={12} sm={4} >
           <Card maxWidth="max-w-lg">
-            <Title>Sales by City</Title>
+            <Title>Sentiment</Title>
             <DonutChart
-                data={ cities }
+                data={ sentiTweets }
                 category="sales"
                 dataKey="name"
                 valueFormatter={ valueFormatter }
@@ -133,11 +110,11 @@ const DashBoard = (props) => {
         </Grid>
         <Grid item xs={12} sm={8} >
           <Card>
-            <Title>Population growth rate (1951 to 2021)</Title>
+            <Title>Number of Tweets</Title>
             <LineChart
-              data={chartdata}
-              dataKey="year"
-              categories={["Population growth rate"]}
+              data={timeGraph}
+              dataKey="time"
+              categories={["value"]}
               colors={["blue"]}
               valueFormatter={dataFormatter}  
               marginTop="mt-6"         
