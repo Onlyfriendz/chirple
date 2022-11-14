@@ -1,8 +1,8 @@
 const fs = require("fs");
 const { sleep } = require("./utils.js");
 
-const MAX_COUNT = 30;
-const TOTAL_ROUNDS = 3;
+const MAX_COUNT = 10;
+const TOTAL_ROUNDS = 1;
 const ROUND_DELAY = 3000;
 
 const API_KEY_FILE_NAME = "API_KEY";
@@ -40,7 +40,6 @@ async function scrape(keyword, startDate, endDate) {
     nextToken = nextPage.next_token;
     count++;
   }
-
   return allTweets;
 }
 

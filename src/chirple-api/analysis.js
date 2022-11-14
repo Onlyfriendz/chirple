@@ -1,31 +1,45 @@
+const {
+    PriorityQueue
+} = require('@datastructures-js/priority-queue');
+
 function getTotal(object) {
-    totalFavorites = 0;
-    totalRetweets = 0;
-    totalQuoteCount = 0;
+    let totalFavorites = 0;
+    let totalRetweets = 0;
+    let totalQuoteCount = 0;
     for (let i = 0; i < object.length; i++) {
-        totalFavorites += object[i]['value8'];
-        totalRetweets += object[i]['value9'];
-        totalQuoteCount += object[i]['value11'];
+        totalFavorites += parseInt(object[i]['value8']);
+        totalRetweets += parseInt(object[i]['value9']);
+        totalQuoteCount += parseInt(object[i]['value11']);
     }
     return [totalFavorites, totalRetweets, totalQuoteCount];
 }
 
-function getGeneralSentiments(object) {
-    score = 0;
-    objectLength = object.length
-    for (let i = 0; i < objectLength; i++) {
-        score += getSentimentScore(object[i]['value_15']);
-    }
+function get3MostLikedPosts(object) {
+    const pq = PriorityQueue.fromArray(object, (a, b) => b['value8'] - a['value8']);
+    const number1 = pq.dequeue();
+    const number2 = pq.dequeue();
+    const number3 = pq.dequeue();
+    return [number1['value1'], number2['value1'], number3['value1']]
+}
 
+function getGeneralSentiments(object) {
+    let score = 0;
+    const objectLength = object.length;
+    for (let i = 0; i < objectLength; i++) {
+        var parsedJSON = JSON.parse(object[i]['value15'])
+        score += getSentimentScore(parsedJSON);
+    }
     return score / (objectLength)
 }
 
 function getSentimentScore(subObject) {
-    score = 0
-    subObjectLength = subObject.length
+    let score = 0;
+    const subObjectLength = subObject.length;
     for (let i = 0; i < subObjectLength; i++) {
-        score += subObject[i]['score'];
+        score += parseFloat(subObject[i]['score']);
     }
-
-    return score / (subObjectLength)
+    const avg = score / parseInt(subObjectLength);
+    return avg;
 }
+
+module.exports = { getTotal, getGeneralSentiments, get3MostLikedPosts };
