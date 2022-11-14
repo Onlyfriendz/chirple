@@ -2,14 +2,13 @@ const { getTotal, getGeneralSentiments, get3MostLikedPosts } = require("./analys
 
 const { scrape } = require("./api.js", "./analysis.js");
 
-async function test() {
+async function scrapeTest() {
   const keyword = "zoukout";
   const startDate = null;
   const endDate = null;
   const result = await scrape(keyword, startDate, endDate);
   console.log(result);
 }
-
 
 async function testTotal() {
   const keyword = "zoukout";
