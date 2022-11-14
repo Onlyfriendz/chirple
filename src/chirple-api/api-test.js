@@ -48,5 +48,5 @@ async function testTime() {
   console.log(timeAnalysis(result));
 }
 
-testNumberSentiments();
+scrapeTest();
 

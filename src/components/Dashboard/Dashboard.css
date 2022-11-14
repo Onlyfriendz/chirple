@@ -1,0 +1,19 @@
+#keywordInput{
+    width: 800px;
+    height: 49px;
+    border: 3px solid black;
+    padding: 1px 0 0 48px;
+    font-size: 22px;
+    color: #400CCC;
+    border-radius: 50px;
+    background-repeat: no-repeat;
+    background-position: center;
+    outline: 0;
+}
+
+input::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+    content: URL("../../assets/RedCross.png");
+    width: 40px;
+    cursor: pointer;
+   }

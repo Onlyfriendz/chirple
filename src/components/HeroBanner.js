@@ -35,7 +35,8 @@ const HeroBanner = (props) => {
         who would like to analyze their marketing or sentiments of their product. As 
         startups and SMEs are rather lean, less resources are spent on analyzing their 
         marketing. With our application, analyzing the sentiments and marketing of their 
-        products becomes much easier and cheaper. 
+        products becomes much easier and cheaper. Chirple currently uses Hashscrapper's 
+        twitter API.
         </Typography>
       </Grid>
 
