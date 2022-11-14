@@ -5,4 +5,4 @@
 .DS_Store
 
 # own files
-./src/chirple-api/key.js
+src/chirple-api/key.js
