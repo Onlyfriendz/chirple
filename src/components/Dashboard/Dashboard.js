@@ -8,13 +8,13 @@ import '@tremor/react/dist/esm/tremor.css';
 import "./Dashboard.css"
 
 const DashBoard = (props) => {
-    let[keywords, setKeywords] = useState("");
-    let[search, setSearch] = useState("");
-    let[totalData, setTotalData] = useState([]);
-    let[tweets, setTweets] = useState([]);
-    let[sentimentScore, setSentimentScore] = useState("");
-    let[sentimentTweets, setSentimentTweets] = useState([]);
-    let[timeGraph, setTimeGraph] = useState({});
+    let [keywords, setKeywords] = useState("");
+    let [search, setSearch] = useState("");
+    let [totalData, setTotalData] = useState([]);
+    let [tweets, setTweets] = useState([]);
+    let [sentimentScore, setSentimentScore] = useState("");
+    let [sentimentTweets, setSentimentTweets] = useState([]);
+    let [timeGraph, setTimeGraph] = useState({});
 
     const handleChange = (e) => {
         e.preventDefault();
@@ -24,31 +24,31 @@ const DashBoard = (props) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setKeywords(search);
-        const allTweets = await scrape(keywords);
+        const allTweets = await scrape(search);
         displayStats(allTweets);
     };
 
     const displayStats = (allTweets) => {
-      console.log(allTweets);
+        console.log(allTweets);
         setTotalData(getTotal(allTweets));
         setTweets(get3MostLikedPosts(allTweets));
         setSentimentScore(getGeneralSentiments(allTweets));
         setSentimentTweets(getNumberSentiments(allTweets));
         setTimeGraph(timeAnalysis(allTweets));
-    }
+    };
 
     const cities = [
       {
           name: 'Positive',
-          sales: 23,
+          sales: sentimentTweets[0],
       },
       {
           name: 'Negative',
-          sales: 12,
+          sales: sentimentTweets[1],
       },
       {
           name: 'Neutral',
-          sales: 5,
+          sales: sentimentTweets[2],
       },
   ];
   
@@ -81,8 +81,6 @@ const DashBoard = (props) => {
   
   const dataFormatter = (number) =>
     `${Intl.NumberFormat("us").format(number).toString()}%`;
-
-
 
   return (
     <Grid containery spacing={6} justifyContent="center" alignItems="center" padding={10}
