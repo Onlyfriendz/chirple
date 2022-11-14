@@ -1,12 +1,9 @@
-const fs = require("fs");
+const { API_KEY } = require("./key.js");
 const { sleep } = require("./utils.js");
 
 const MAX_COUNT = 30;
 const TOTAL_ROUNDS = 3;
 const ROUND_DELAY = 3000;
-
-const API_KEY_FILE_NAME = "API_KEY";
-const API_KEY = fs.readFileSync(API_KEY_FILE_NAME).toString().substring(0, 32);
 
 async function postCall(keyword, startDate, endDate, nextToken) {
   const request = await fetch("http://www.hashscraper.com/api/twitter", {
