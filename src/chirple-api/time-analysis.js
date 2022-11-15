@@ -1,8 +1,8 @@
 const { scrape } = require("./api.js");
 
-function removeTime(date = new Date()) {
-    return new Date(date.toDateString());
-  }
+// function removeTime(date = new Date()) {
+//     return new Date(date.toDateString());
+//   }
 
 function timeAnalysis(tweets) {
     const result = {};
@@ -16,7 +16,7 @@ function timeAnalysis(tweets) {
     }
     for (const date in result) {
         res2.push({
-            time: removeTime(new Date(date)),
+            time: new Date(date),
             value: result[date]
         });
     }
