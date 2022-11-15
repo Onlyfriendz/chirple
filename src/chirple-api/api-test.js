@@ -1,12 +1,12 @@
-const {
+import {
   getTotal,
   getGeneralSentiments,
   get3MostLikedPosts,
   getNumberSentiments,
-} = require("./analysis.js");
+} from "./analysis.js";
 
-const { scrape } = require("./api.js");
-const { timeAnalysis } = require("./time-analysis.js");
+import { scrape } from "./api.js";
+import { timeAnalysis } from "./time-analysis.js";
 
 async function scrapeTest() {
   const keyword = "gradle";
