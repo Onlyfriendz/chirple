@@ -1,5 +1,3 @@
-const { scrape } = require("./api.js");
-
 function timeAnalysis(tweets) {
     const result = {};
     const res2 = [];

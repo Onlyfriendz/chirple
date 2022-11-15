@@ -1,6 +1,4 @@
-const {
-    PriorityQueue
-} = require('@datastructures-js/priority-queue');
+const { PriorityQueue } = require('@datastructures-js/priority-queue');
 
 function getTotal(object) {
     let totalFavorites = 0;
@@ -59,4 +57,9 @@ function getNumberSentiments(object) {
     return [positiveNumber, negativeNumber, neutralNumber];
 }
 
-module.exports = { getTotal, getGeneralSentiments, get3MostLikedPosts, getNumberSentiments };
+module.exports = {
+    getTotal,
+    getGeneralSentiments,
+    get3MostLikedPosts,
+    getNumberSentiments
+};

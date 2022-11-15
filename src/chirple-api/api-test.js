@@ -3,13 +3,13 @@ const {
   getGeneralSentiments,
   get3MostLikedPosts,
   getNumberSentiments,
-} = require("./analysis");
+} = require("./analysis.js");
 
 const { scrape } = require("./api.js");
-const { timeAnalysis } = require("./time-analysis");
+const { timeAnalysis } = require("./time-analysis.js");
 
 async function scrapeTest() {
-  const keyword = "zoukout";
+  const keyword = "deontology";
   const startDate = null;
   const endDate = null;
   const result = await scrape(keyword, startDate, endDate);
@@ -53,4 +53,4 @@ async function testTime() {
   console.log(timeAnalysis(result));
 }
 
-testTime();
+scrapeTest();

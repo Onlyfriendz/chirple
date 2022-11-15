@@ -2,7 +2,7 @@ const { API_KEY } = require("./key.js");
 const { sleep } = require("./utils.js");
 
 const MAX_COUNT = 10;
-const TOTAL_ROUNDS = 1;
+const TOTAL_ROUNDS = 3;
 const ROUND_DELAY = 3000;
 const PROXY_URL = "https://hidden-ocean-65167.herokuapp.com/";
 const HTTP_PORT = "localhost:3000";
@@ -38,7 +38,6 @@ async function scrape(keyword, startDate, endDate) {
   let count = 1;
   let nextToken = initialResult.next_token;
   while (nextToken && count < TOTAL_ROUNDS) {
-    await sleep(ROUND_DELAY);
     const nextPage = await postCall(keyword, startDate, endDate, nextToken);
     allTweets = allTweets.concat(nextPage.data);
     nextToken = nextPage.next_token;
