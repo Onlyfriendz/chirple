@@ -61,7 +61,7 @@ const DashBoard = (props) => {
 
   return (
     <Grid container spacing={6} justifyContent="center" alignItems="center" padding={10}
-      direction="column">
+      direction="column" sx={{ mb: "7em" }}>
       <Box item lg={8} >
         <form onSubmit={handleSubmit}>
           <input
@@ -104,7 +104,7 @@ const DashBoard = (props) => {
                 dataKey="name"
                 valueFormatter={ valueFormatter }
                 marginTop="mt-6"
-                colors={["slate", "violet", "indigo", "rose", "cyan", "amber"]}
+                colors={["indigo", "violet", "slate", "rose", "cyan", "amber"]}
             />
           </Card>
         </Grid>
@@ -123,6 +123,10 @@ const DashBoard = (props) => {
           </Card>
         </Grid>
       </Grid>
+
+      {/* <Grid container item width={1200} direction="row">
+        <Typography>{tweets}</Typography>
+      </Grid> */}
 
     </Grid>
   );

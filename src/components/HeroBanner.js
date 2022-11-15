@@ -3,8 +3,8 @@ import { Grid, Typography } from "@mui/material";
 const HeroBanner = (props) => {
 
   return (
-    <Grid container spacing={6} justifyContent="center" alignItems="center" sx={{ mt: "1.5rem" }} padding={20}>
-      <Grid item lg={8}>
+    <Grid container spacing={6} justifyContent="center" alignItems="center" sx={{ mt: "7em", paddingLeft: "10em", paddingRight: "10em" }} padding={10}>
+      <Grid item lg={8} sx={{ mr: "2em"}}>
         <Typography
           variant="h3"
           component="h1"
