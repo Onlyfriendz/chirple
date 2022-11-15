@@ -2,11 +2,15 @@ const { API_KEY } = require("./key.js");
 const { sleep } = require("./utils.js");
 
 const MAX_COUNT = 10;
-const TOTAL_ROUNDS = 1;
+const TOTAL_COUNT = 30;
 const ROUND_DELAY = 3000;
+const ERROR_LIMIT = 1;
 const PROXY_URL = "https://hidden-ocean-65167.herokuapp.com/";
 const HTTP_PORT = "localhost:3000";
 const HASHSCRAPPER = "http://www.hashscraper.com/api/twitter";
+const API_ERROR = `Error: Server error during API call,`
+  + ` after ${ERROR_LIMIT} attempt${ERROR_LIMIT === 1 ? '' : 's'}.`
+  + `\nTry again later.`;
 
 async function postCall(keyword, startDate, endDate, nextToken) {
   const body = JSON.stringify({
@@ -28,21 +32,55 @@ async function postCall(keyword, startDate, endDate, nextToken) {
     },
   });
 
-  const result = await request.json();
-  return result;
+  try {
+    const result = await request.json();
+    return result;
+  } catch (error) {
+    throw API_ERROR;
+  }
 }
 
 async function scrape(keyword, startDate, endDate) {
+  let round = 1;
+  let errorCount = 0;
+  let count = 0;
+
+  // init round 1
   const initialResult = await postCall(keyword, startDate, endDate);
-  let allTweets = initialResult.data;
-  let count = 1;
+  let allTweets = [];
+  allTweets.push(...initialResult.data);
   let nextToken = initialResult.next_token;
-  while (nextToken && count < TOTAL_ROUNDS) {
-    await sleep(ROUND_DELAY);
-    const nextPage = await postCall(keyword, startDate, endDate, nextToken);
-    allTweets = allTweets.concat(nextPage.data);
-    nextToken = nextPage.next_token;
-    count++;
+  if (allTweets.length === count) {
+    return [];
+  }
+
+  count = allTweets.length;
+  console.log(`Round ${round}: ${count}`);
+  console.log(allTweets);
+
+  // subsequent rounds, if necessary
+  while (nextToken && count < TOTAL_COUNT) {
+    sleep(ROUND_DELAY);
+    try {
+      const nextPage = await postCall(keyword, startDate, endDate, nextToken);
+      allTweets.push(...nextPage.data);
+      nextToken = nextPage.next_token;
+      round++;
+
+      // check if there are zero new tweets
+      if (allTweets.length === count) {
+        break;
+      }
+
+      count = allTweets.length;
+      console.log(`Round ${round}: ${count}`);
+      console.log(allTweets);
+    } catch (error) {
+      errorCount++;
+      if (ERROR_LIMIT > 0 && errorCount >= ERROR_LIMIT) {
+        throw API_ERROR;
+      }
+    }
   }
   return allTweets;
 }

@@ -3,17 +3,22 @@ const {
   getGeneralSentiments,
   get3MostLikedPosts,
   getNumberSentiments,
-} = require("./analysis");
+} = require("./analysis.js");
 
 const { scrape } = require("./api.js");
-const { timeAnalysis } = require("./time-analysis");
+const { timeAnalysis } = require("./time-analysis.js");
 
 async function scrapeTest() {
-  const keyword = "zoukout";
+  const keyword = "merkle tree";
   const startDate = null;
   const endDate = null;
-  const result = await scrape(keyword, startDate, endDate);
-  console.log(result);
+  try {
+    const result = await scrape(keyword, startDate, endDate);
+    console.log(result);
+    console.log(`Total: ${result.length}`);
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 async function testTotal() {
@@ -53,4 +58,4 @@ async function testTime() {
   console.log(timeAnalysis(result));
 }
 
-testTime();
+scrapeTest();

@@ -1,5 +1,5 @@
 import { Grid, Typography, Box, Button } from "@mui/material";
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import { get3MostLikedPosts, getGeneralSentiments, getNumberSentiments, getTotal } from "../../chirple-api/analysis.js";
 import { scrape } from "../../chirple-api/api.js";
 import { timeAnalysis } from "../../chirple-api/time-analysis.js";
