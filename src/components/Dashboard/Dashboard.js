@@ -29,7 +29,6 @@ const DashBoard = (props) => {
     };
 
     const displayStats = (allTweets) => {
-        console.log(allTweets);
         setTotalData(getTotal(allTweets));
         setTweets(get3MostLikedPosts(allTweets));
         setSentimentScore(getGeneralSentiments(allTweets));

@@ -4,7 +4,7 @@ const { sleep } = require("./utils.js");
 const MAX_COUNT = 10;
 const TOTAL_COUNT = 30;
 const ROUND_DELAY = 3000;
-const ERROR_LIMIT = 1;
+const ERROR_LIMIT = 3;
 const PROXY_URL = "https://hidden-ocean-65167.herokuapp.com/";
 const HTTP_PORT = "localhost:3000";
 const HASHSCRAPPER = "http://www.hashscraper.com/api/twitter";
@@ -55,8 +55,6 @@ async function scrape(keyword, startDate, endDate) {
   }
 
   count = allTweets.length;
-  console.log(`Round ${round}: ${count}`);
-  console.log(allTweets);
 
   // subsequent rounds, if necessary
   while (nextToken && count < TOTAL_COUNT) {
@@ -73,8 +71,6 @@ async function scrape(keyword, startDate, endDate) {
       }
 
       count = allTweets.length;
-      console.log(`Round ${round}: ${count}`);
-      console.log(allTweets);
     } catch (error) {
       errorCount++;
       if (ERROR_LIMIT > 0 && errorCount >= ERROR_LIMIT) {
