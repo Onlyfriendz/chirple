@@ -2,7 +2,7 @@ const { API_KEY } = require("./key.js");
 const { sleep } = require("./utils.js");
 
 const MAX_COUNT = 10;
-const TOTAL_COUNT = 100;
+const TOTAL_COUNT = 20;
 const ROUND_DELAY = 3000;
 const ERROR_LIMIT = 0;
 const PROXY_URL = "https://pure-falls-05958.herokuapp.com/";
@@ -49,7 +49,12 @@ async function scrape(keyword, startDate, endDate) {
   // init round 1
   try {
     const initialResult = await postCall(keyword, startDate, endDate);
-    allTweets.push(...initialResult.data);
+    for (const tweet of initialResult.data) {
+      if (tweet["value5"] === "mrblue_bl") {
+        continue;
+      }
+      allTweets.push(tweet);
+    }
     nextToken = initialResult.next_token;
     if (allTweets.length === count) {
       return [];
@@ -67,7 +72,12 @@ async function scrape(keyword, startDate, endDate) {
     sleep(ROUND_DELAY);
     try {
       const nextPage = await postCall(keyword, startDate, endDate, nextToken);
-      allTweets.push(...nextPage.data);
+      for (const tweet of nextPage.data) {
+        if (tweet["value5"] === "mrblue_bl") {
+          continue;
+        }
+        allTweets.push(tweet);
+      }
       nextToken = nextPage.next_token;
 
       // check if there are zero new tweets

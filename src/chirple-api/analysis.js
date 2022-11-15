@@ -17,7 +17,16 @@ function get3MostLikedPosts(object) {
     const number1 = pq.dequeue();
     const number2 = pq.dequeue();
     const number3 = pq.dequeue();
-    return [number1['value1'].split("/")[5], number2['value1'].split("/")[5], number3['value1'].split("/")[5]]
+    const id1 = getTweetId(number1);
+    const id2 = getTweetId(number2);
+    const id3 = getTweetId(number3);
+    const ids = [id1, id2, id3];
+    return ids;
+}
+
+function getTweetId(tweet) {
+  const url = tweet['value1'];
+  return url.split("/")[5];
 }
 
 function getGeneralSentiments(object) {
