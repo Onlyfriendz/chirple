@@ -40,51 +40,45 @@ async function postCall(keyword, startDate, endDate, nextToken) {
   }
 }
 
+function concatTweets(allTweets, nextBatch) {
+  const BLACKLIST = "mrblue_bl";
+  for (const tweet of nextBatch) {
+    let isValid = true;
+    const url = tweet["value1"];
+    const user = tweet["value5"];
+    if (user === BLACKLIST) {
+      isValid = false;
+    } else {
+      for (const currentTweet of allTweets) {
+        if (currentTweet["value1"] === url) {
+          isValid = false;
+          break;
+        }
+      }
+    }
+    if (isValid) {
+      allTweets.push(tweet);
+    }
+  }
+}
+
 async function scrape(keyword, startDate, endDate) {
   let errorCount = 0;
   let count = 0;
   let nextToken;
   let allTweets = [];
 
-  // init round 1
-  try {
-    const initialResult = await postCall(keyword, startDate, endDate);
-    for (const tweet of initialResult.data) {
-      if (tweet["value5"] === "mrblue_bl") {
-        continue;
-      }
-      allTweets.push(tweet);
-    }
-    nextToken = initialResult.next_token;
-    if (allTweets.length === count) {
-      return [];
-    }
-    count = allTweets.length;
-  } catch (error) {
-      errorCount++;
-      if (ERROR_LIMIT > 0 && errorCount >= ERROR_LIMIT) {
-        throw API_ERROR;
-      }
-  }
-
-  // subsequent rounds, if necessary
-  while (nextToken && count < TOTAL_COUNT) {
+  while (count == 0 ? true : nextToken && count < TOTAL_COUNT) {
     sleep(ROUND_DELAY);
     try {
       const nextPage = await postCall(keyword, startDate, endDate, nextToken);
-      for (const tweet of nextPage.data) {
-        if (tweet["value5"] === "mrblue_bl") {
-          continue;
-        }
-        allTweets.push(tweet);
-      }
+      concatTweets(allTweets, nextPage.data);
       nextToken = nextPage.next_token;
 
       // check if there are zero new tweets
       if (allTweets.length === count) {
         break;
       }
-
       count = allTweets.length;
     } catch (error) {
       errorCount++;
@@ -93,6 +87,7 @@ async function scrape(keyword, startDate, endDate) {
       }
     }
   }
+
   return allTweets;
 }
 
