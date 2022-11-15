@@ -3,6 +3,3 @@
 
 # macOS files
 .DS_Store
-
-# own files
-src/chirple-api/key.js
