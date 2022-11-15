@@ -17,7 +17,7 @@ function get3MostLikedPosts(object) {
     const number1 = pq.dequeue();
     const number2 = pq.dequeue();
     const number3 = pq.dequeue();
-    return [number1['value1'], number2['value1'], number3['value1']]
+    return [number1['value1'].split("/")[5], number2['value1'].split("/")[5], number3['value1'].split("/")[5]]
 }
 
 function getGeneralSentiments(object) {

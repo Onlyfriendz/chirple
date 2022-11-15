@@ -1,8 +1,8 @@
 const { API_KEY } = require("./key.js");
 const { sleep } = require("./utils.js");
 
-const MAX_COUNT = 10;
-const TOTAL_COUNT = 30;
+const MAX_COUNT = 20;
+const TOTAL_COUNT = 100;
 const ROUND_DELAY = 3000;
 const ERROR_LIMIT = 3;
 const PROXY_URL = "https://hidden-ocean-65167.herokuapp.com/";

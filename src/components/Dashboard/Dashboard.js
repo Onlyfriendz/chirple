@@ -1,13 +1,17 @@
-import { Grid, Typography, Box, Button } from "@mui/material";
+import { Grid, Typography, Box } from "@mui/material";
+import Stack from '@mui/material/Stack';
+import LinearProgress from '@mui/material/LinearProgress';
 import React, { useState } from 'react'
 import { get3MostLikedPosts, getGeneralSentiments, getNumberSentiments, getTotal } from "../../chirple-api/analysis.js";
 import { scrape } from "../../chirple-api/api.js";
 import { timeAnalysis } from "../../chirple-api/time-analysis.js";
 import { Card, Title, DonutChart, Metric, Text, LineChart } from '@tremor/react';
 import '@tremor/react/dist/esm/tremor.css';
-import "./Dashboard.css"
+import "./Dashboard.css";
+import { TwitterTweetEmbed } from 'react-twitter-embed';
 
 const DashBoard = (props) => {
+    let [loading, setLoading] = useState(false);
     let [keywords, setKeywords] = useState("");
     let [search, setSearch] = useState("");
     let [totalData, setTotalData] = useState([]);
@@ -23,9 +27,18 @@ const DashBoard = (props) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true);
         setKeywords(search);
-        const allTweets = await scrape(search);
-        displayStats(allTweets);
+        try {
+          const allTweets = await scrape(search);
+          displayStats(allTweets);
+          if (allTweets) {
+            setLoading(false);
+          }
+        } catch (error) {
+          setLoading(false);
+          alert(error);
+        }
     };
 
     const displayStats = (allTweets) => {
@@ -72,61 +85,86 @@ const DashBoard = (props) => {
         </form>
       </Box>
 
-      <Grid container item width={1200} direction="row">
-        <Grid item xs={12} sm={4} >
-          <Card maxWidth="max-w-xs" decoration="top" decorationColor="indigo">
-            <Text>Favorites</Text>
-            <Metric>{totalData[0]}</Metric>
-          </Card>
+      {loading ? (
+        <Grid container item justifyContent="center" width={1200}>
+          <Typography variant="h3" padding={5} sx={{ fontSize: 30 }}>기다리세요 This may take up to 5mins ...</Typography>
+          <Stack sx={{ width: '100%', color: 'grey.500' }} spacing={2}>
+            <LinearProgress color="primary" />
+          </Stack>
         </Grid>
-        <Grid item xs={12} sm={4} >
-          <Card maxWidth="max-w-xs" decoration="top" decorationColor="indigo">
-            <Text>ReTweets</Text>
-            <Metric>{totalData[1]}</Metric>
-          </Card>
-        </Grid>
-        <Grid item xs={12} sm={4} >
-          <Card maxWidth="max-w-xs" decoration="top" decorationColor="indigo">
-            <Text>Quotes</Text>
-            <Metric>{totalData[2]}</Metric>
-          </Card>
-        </Grid>
-      </Grid>
+      ) : (
+        <>
+          <Grid container item width={1200} direction="row">
+            <Grid item xs={12} sm={4}>
+              <Card maxWidth="max-w-xs" decoration="top" decorationColor="indigo">
+                <Text>Favorites</Text>
+                <Metric>{totalData[0]}</Metric>
+              </Card>
+            </Grid>
+            <Grid item xs={12} sm={4}>
+              <Card maxWidth="max-w-xs" decoration="top" decorationColor="indigo">
+                <Text>ReTweets</Text>
+                <Metric>{totalData[1]}</Metric>
+              </Card>
+            </Grid>
+            <Grid item xs={12} sm={4}>
+              <Card maxWidth="max-w-xs" decoration="top" decorationColor="indigo">
+                <Text>Quotes</Text>
+                <Metric>{totalData[2]}</Metric>
+              </Card>
+            </Grid>
+          </Grid>
+          <Grid container item width={1200} direction="row" sx={{mb: "50px"}}>
+            <Grid item xs={12} sm={4}>
+              <Card maxWidth="max-w-lg">
+                <Title>Sentiment</Title>
+                <DonutChart
+                  data={sentiTweets}
+                  category="sales"
+                  dataKey="name"
+                  valueFormatter={valueFormatter}
+                  marginTop="mt-6"
+                  colors={["indigo", "violet", "slate", "rose", "cyan", "amber"]} />
+              </Card>
+            </Grid>
+            <Grid item xs={12} sm={8}>
+              <Card>
+                <Title>Number of Tweets</Title>
+                <LineChart
+                  data={timeGraph}
+                  dataKey="time"
+                  categories={["value"]}
+                  colors={["blue"]}
+                  valueFormatter={dataFormatter}
+                  marginTop="mt-6"
+                  yAxisWidth="w-10" />
+              </Card>
+            </Grid>
+          </Grid>
 
-      <Grid container item width={1200} direction="row">
-        <Grid item xs={12} sm={4} >
-          <Card maxWidth="max-w-lg">
-            <Title>Sentiment</Title>
-            <DonutChart
-                data={ sentiTweets }
-                category="sales"
-                dataKey="name"
-                valueFormatter={ valueFormatter }
-                marginTop="mt-6"
-                colors={["indigo", "violet", "slate", "rose", "cyan", "amber"]}
-            />
-          </Card>
-        </Grid>
-        <Grid item xs={12} sm={8} >
-          <Card>
-            <Title>Number of Tweets</Title>
-            <LineChart
-              data={timeGraph}
-              dataKey="time"
-              categories={["value"]}
-              colors={["blue"]}
-              valueFormatter={dataFormatter}  
-              marginTop="mt-6"         
-              yAxisWidth="w-10"
-            />
-          </Card>
-        </Grid>
-      </Grid>
+          <Grid container item width={1200} direction="column" justifyContent="left">
+            <Typography variant="h3" sx={{ color: "primary.main", fontWeight: "bold", fontSize: 40, mb: "20px" }}>Top 3 Tweets</Typography>
+            <Grid container item width={1200} direction="row" justifyContent="center" alignItems="flex-start">
+              <Grid width={300}>
+                <TwitterTweetEmbed
+                  tweetId={tweets[0]}
+                />
+              </Grid>
+              <Grid width={300}>
+                <TwitterTweetEmbed
+                  tweetId={tweets[1]}
+                />
+              </Grid>
+              <Grid width={300}>
+                <TwitterTweetEmbed
+                  tweetId={tweets[2]}
+                />
+              </Grid>
+            </Grid> 
+          </Grid>
 
-      {/* <Grid container item width={1200} direction="row">
-        <Typography>{tweets}</Typography>
-      </Grid> */}
-
+        </>
+      )}
     </Grid>
   );
 };
