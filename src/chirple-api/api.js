@@ -8,9 +8,10 @@ const ERROR_LIMIT = 0;
 const PROXY_URL = "https://pure-falls-05958.herokuapp.com/";
 const HTTP_PORT = "localhost:3000";
 const HASHSCRAPPER = "http://www.hashscraper.com/api/twitter";
-const API_ERROR = `Error: Server error during API call,`
-  + ` after ${ERROR_LIMIT} attempt${ERROR_LIMIT === 1 ? '' : 's'}.`
-  + `\nTry again later.`;
+const API_ERROR =
+  `Error: Server error during API call,` +
+  ` after ${ERROR_LIMIT} attempt${ERROR_LIMIT === 1 ? "" : "s"}.` +
+  `\nTry again later.`;
 
 async function postCall(keyword, startDate, endDate, nextToken) {
   const body = JSON.stringify({
@@ -68,7 +69,7 @@ async function scrape(keyword, startDate, endDate) {
   let nextToken;
   let allTweets = [];
 
-  while (count == 0 ? true : nextToken && count < TOTAL_COUNT) {
+  while (count === 0 ? true : nextToken && count < TOTAL_COUNT) {
     sleep(ROUND_DELAY);
     try {
       const nextPage = await postCall(keyword, startDate, endDate, nextToken);
