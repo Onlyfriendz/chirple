@@ -1,12 +1,11 @@
 import {
   getTotal,
-  getGeneralSentiments,
   get3MostLikedPosts,
   getNumberSentiments,
-} from "./analysis.js";
+} from "./analysis.mjs";
 
-import { scrape } from "./api.js";
-import { timeAnalysis } from "./time-analysis.js";
+import { scrape } from "./api.mjs";
+import { timeAnalysis } from "./time-analysis.mjs";
 
 async function scrapeTest() {
   const keyword = "gradle";

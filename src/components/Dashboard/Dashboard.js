@@ -6,9 +6,9 @@ import {
   get3MostLikedPosts,
   getNumberSentiments,
   getTotal,
-} from "../../chirple-api/analysis.js";
-import { scrape } from "../../chirple-api/api.js";
-import { timeAnalysis } from "../../chirple-api/time-analysis.js";
+} from "../../chirple-api/analysis.mjs";
+import { scrape } from "../../chirple-api/api.mjs";
+import { timeAnalysis } from "../../chirple-api/time-analysis.mjs";
 import {
   Card,
   Title,

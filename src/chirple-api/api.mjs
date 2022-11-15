@@ -1,4 +1,4 @@
-import { sleep } from "./utils.js";
+import { sleep } from "./utils.mjs";
 
 const API_KEY = process.env.REACT_APP_API_KEY;
 const MAX_COUNT = 10;
