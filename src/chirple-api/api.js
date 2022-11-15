@@ -1,4 +1,4 @@
-const { sleep } = require("./utils.js");
+import { sleep } from "./utils.js";
 
 const API_KEY = process.env.REACT_APP_API_KEY;
 const MAX_COUNT = 10;
@@ -14,7 +14,6 @@ const API_ERROR =
   `\nTry again later.`;
 
 async function postCall(keyword, startDate, endDate, nextToken) {
-  console.log("key: " + API_KEY);
   const body = JSON.stringify({
     api_key: API_KEY,
     keyword,
@@ -64,7 +63,7 @@ function concatTweets(allTweets, nextBatch) {
   }
 }
 
-async function scrape(keyword, startDate, endDate) {
+export async function scrape(keyword, startDate, endDate) {
   let errorCount = 0;
   let count = 0;
   let nextToken;
@@ -92,5 +91,3 @@ async function scrape(keyword, startDate, endDate) {
 
   return allTweets;
 }
-
-module.exports = { scrape };
