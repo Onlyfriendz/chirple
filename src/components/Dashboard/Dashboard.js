@@ -145,17 +145,20 @@ const DashBoard = (props) => {
           <Grid container item width={1200} direction="column" justifyContent="left">
             <Typography variant="h3" sx={{ color: "primary.main", fontWeight: "bold", fontSize: 40, mb: "20px" }}>Top 3 Tweets</Typography>
             <Grid container item width={1200} direction="row" justifyContent="center" alignItems="flex-start">
-              <Grid width={300}>
+              <Grid width={300} sx={{ mr: "40px" }}>
+                {/* <Typography>id: {tweets[0]}</Typography> */}
                 <TwitterTweetEmbed
                   tweetId={tweets[0]}
                 />
               </Grid>
               <Grid width={300}>
+                {/* <Typography>id: {tweets[1]}</Typography> */}
                 <TwitterTweetEmbed
                   tweetId={tweets[1]}
                 />
               </Grid>
-              <Grid width={300}>
+              <Grid width={300} sx={{ ml: "40px" }}>
+                {/* <Typography>id: {tweets[2]}</Typography> */}
                 <TwitterTweetEmbed
                   tweetId={tweets[2]}
                 />
