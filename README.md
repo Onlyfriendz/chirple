@@ -1,4 +1,5 @@
 # Chirple
+![Chirple](README_Images/Chirple_logo.png)
 ## Product Description
 Chirple is a Twitter analytics application that would help startups and Small Medium Enterprises(SME) to analyse sentiments of their product via Twitter. Chirple makes use of Hashscrapper Twitter API to scrape the tweets on twitter.
 
