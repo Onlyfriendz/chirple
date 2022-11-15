@@ -3,8 +3,8 @@ import { Grid, Typography } from "@mui/material";
 const HeroBanner = (props) => {
 
   return (
-    <Grid container spacing={6} justifyContent="center" alignItems="center" sx={{ mt: "1.5rem" }} padding={20}>
-      <Grid item lg={8}>
+    <Grid container spacing={6} justifyContent="center" alignItems="center" sx={{ mt: "7em", paddingLeft: "10em", paddingRight: "10em" }} padding={10}>
+      <Grid item lg={8} sx={{ mr: "2em"}}>
         <Typography
           variant="h3"
           component="h1"
@@ -35,7 +35,8 @@ const HeroBanner = (props) => {
         who would like to analyze their marketing or sentiments of their product. As 
         startups and SMEs are rather lean, less resources are spent on analyzing their 
         marketing. With our application, analyzing the sentiments and marketing of their 
-        products becomes much easier and cheaper. 
+        products becomes much easier and cheaper. Chirple currently uses Hashscrapper's 
+        twitter API.
         </Typography>
       </Grid>
 

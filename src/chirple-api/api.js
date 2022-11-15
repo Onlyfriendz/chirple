@@ -1,23 +1,30 @@
 const { API_KEY } = require("./key.js");
 const { sleep } = require("./utils.js");
 
-const MAX_COUNT = 30;
-const TOTAL_ROUNDS = 3;
+const MAX_COUNT = 10;
+const TOTAL_ROUNDS = 1;
 const ROUND_DELAY = 3000;
+const PROXY_URL = "https://hidden-ocean-65167.herokuapp.com/";
+const HTTP_PORT = "localhost:3000";
+const HASHSCRAPPER = "http://www.hashscraper.com/api/twitter";
 
 async function postCall(keyword, startDate, endDate, nextToken) {
-  const request = await fetch("http://www.hashscraper.com/api/twitter", {
+  const body = JSON.stringify({
+    api_key: API_KEY,
+    keyword,
+    start_date: startDate,
+    end_date: endDate,
+    max_count: MAX_COUNT,
+    next_token: nextToken,
+  });
+  const length = body.length;
+  const request = await fetch(`${PROXY_URL}${HASHSCRAPPER}`, {
     method: "POST",
-    body: JSON.stringify({
-      api_key: API_KEY,
-      keyword,
-      start_date: startDate,
-      end_date: endDate,
-      max_count: MAX_COUNT,
-      next_token: nextToken,
-    }),
+    body,
     headers: {
-      "Content-type": "application/json; version=2; charset=UTF-8",
+      "Content-Type": "application/json; version=2; charset=UTF-8",
+      Origin: HTTP_PORT,
+      "Content-Length": length.toString(),
     },
   });
 
