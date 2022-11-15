@@ -19,16 +19,7 @@ const HeroBanner = (props) => {
           >
             tailored data analysis
           </Typography>{" "}
-          for
-          {
-            <Typography
-              component="span"
-              sx={{ display: { xs: "inline", xl: "none" } }}
-            >
-              <br></br>
-            </Typography>
-          }{" "}
-          your products or events.
+          for your products and events.
         </Typography>
         <Typography variant="body1" sx={{ my: "2rem" }} align="left">
         This application will be targeting startups and Small Medium Enterprises (SME) 

@@ -2,9 +2,9 @@ const { API_KEY } = require("./key.js");
 const { sleep } = require("./utils.js");
 
 const MAX_COUNT = 10;
-const TOTAL_COUNT = 10;
+const TOTAL_COUNT = 100;
 const ROUND_DELAY = 3000;
-const ERROR_LIMIT = 3;
+const ERROR_LIMIT = 0;
 const PROXY_URL = "https://pure-falls-05958.herokuapp.com/";
 const HTTP_PORT = "localhost:3000";
 const HASHSCRAPPER = "http://www.hashscraper.com/api/twitter";
