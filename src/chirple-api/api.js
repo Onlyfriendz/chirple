@@ -1,11 +1,11 @@
 const { API_KEY } = require("./key.js");
 const { sleep } = require("./utils.js");
 
-const MAX_COUNT = 20;
-const TOTAL_COUNT = 100;
+const MAX_COUNT = 10;
+const TOTAL_COUNT = 10;
 const ROUND_DELAY = 3000;
 const ERROR_LIMIT = 3;
-const PROXY_URL = "https://hidden-ocean-65167.herokuapp.com/";
+const PROXY_URL = "https://pure-falls-05958.herokuapp.com/";
 const HTTP_PORT = "localhost:3000";
 const HASHSCRAPPER = "http://www.hashscraper.com/api/twitter";
 const API_ERROR = `Error: Server error during API call,`
@@ -41,20 +41,26 @@ async function postCall(keyword, startDate, endDate, nextToken) {
 }
 
 async function scrape(keyword, startDate, endDate) {
-  let round = 1;
   let errorCount = 0;
   let count = 0;
+  let nextToken;
+  let allTweets = [];
 
   // init round 1
-  const initialResult = await postCall(keyword, startDate, endDate);
-  let allTweets = [];
-  allTweets.push(...initialResult.data);
-  let nextToken = initialResult.next_token;
-  if (allTweets.length === count) {
-    return [];
+  try {
+    const initialResult = await postCall(keyword, startDate, endDate);
+    allTweets.push(...initialResult.data);
+    nextToken = initialResult.next_token;
+    if (allTweets.length === count) {
+      return [];
+    }
+    count = allTweets.length;
+  } catch (error) {
+      errorCount++;
+      if (ERROR_LIMIT > 0 && errorCount >= ERROR_LIMIT) {
+        throw API_ERROR;
+      }
   }
-
-  count = allTweets.length;
 
   // subsequent rounds, if necessary
   while (nextToken && count < TOTAL_COUNT) {
@@ -63,7 +69,6 @@ async function scrape(keyword, startDate, endDate) {
       const nextPage = await postCall(keyword, startDate, endDate, nextToken);
       allTweets.push(...nextPage.data);
       nextToken = nextPage.next_token;
-      round++;
 
       // check if there are zero new tweets
       if (allTweets.length === count) {
