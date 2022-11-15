@@ -9,11 +9,16 @@ const { scrape } = require("./api.js");
 const { timeAnalysis } = require("./time-analysis.js");
 
 async function scrapeTest() {
-  const keyword = "deontology";
+  const keyword = "helvetica";
   const startDate = null;
   const endDate = null;
-  const result = await scrape(keyword, startDate, endDate);
-  console.log(result);
+  try {
+    const result = await scrape(keyword, startDate, endDate);
+    console.log(result);
+    console.log(`Total: ${result.length}`);
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 async function testTotal() {
