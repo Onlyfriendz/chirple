@@ -1,7 +1,7 @@
 import { Grid, Typography, Box } from "@mui/material";
 import Stack from '@mui/material/Stack';
 import LinearProgress from '@mui/material/LinearProgress';
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import { get3MostLikedPosts, getGeneralSentiments, getNumberSentiments, getTotal } from "../../chirple-api/analysis.js";
 import { scrape } from "../../chirple-api/api.js";
 import { timeAnalysis } from "../../chirple-api/time-analysis.js";
@@ -29,15 +29,19 @@ const DashBoard = (props) => {
         e.preventDefault();
         setLoading(true);
         setKeywords(search);
-        const allTweets = await scrape(search);
-        displayStats(allTweets);
-        if (allTweets) {
+        try {
+          const allTweets = await scrape(search);
+          displayStats(allTweets);
+          if (allTweets) {
+            setLoading(false);
+          }
+        } catch (error) {
           setLoading(false);
+          alert(error);
         }
     };
 
     const displayStats = (allTweets) => {
-        console.log("done");
         setTotalData(getTotal(allTweets));
         setTweets(get3MostLikedPosts(allTweets));
         setSentimentScore(getGeneralSentiments(allTweets));
@@ -65,7 +69,7 @@ const DashBoard = (props) => {
   );
   
   const dataFormatter = (number) =>
-    `${Intl.NumberFormat("us").format(number).toString()}%`;
+    `${Intl.NumberFormat("us").format(number).toString()}`;
 
   return (
     <Grid container spacing={6} justifyContent="center" alignItems="center" padding={10}
@@ -83,7 +87,7 @@ const DashBoard = (props) => {
 
       {loading ? (
         <Grid container item justifyContent="center" width={1200}>
-          <Typography variant="h3" padding={5}>기다리세요 This may take up to 5mins ...</Typography>
+          <Typography variant="h3" padding={5} sx={{ fontSize: 30 }}>기다리세요 This may take up to 5mins ...</Typography>
           <Stack sx={{ width: '100%', color: 'grey.500' }} spacing={2}>
             <LinearProgress color="primary" />
           </Stack>
