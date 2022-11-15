@@ -57,7 +57,7 @@ const DashBoard = (props) => {
   );
   
   const dataFormatter = (number) =>
-    `${Intl.NumberFormat("us").format(number).toString()}%`;
+    `${Intl.NumberFormat("us").format(number).toString()}`;
 
   return (
     <Grid container spacing={6} justifyContent="center" alignItems="center" padding={10}
