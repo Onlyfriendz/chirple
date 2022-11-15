@@ -1,6 +1,6 @@
-const { API_KEY } = require("./key.js");
 const { sleep } = require("./utils.js");
 
+const API_KEY = process.env.REACT_APP_API_KEY;
 const MAX_COUNT = 10;
 const TOTAL_COUNT = 30;
 const ROUND_DELAY = 3000;
@@ -14,6 +14,7 @@ const API_ERROR =
   `\nTry again later.`;
 
 async function postCall(keyword, startDate, endDate, nextToken) {
+  console.log("key: " + API_KEY);
   const body = JSON.stringify({
     api_key: API_KEY,
     keyword,
