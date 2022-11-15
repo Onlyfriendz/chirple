@@ -9,7 +9,7 @@ const { scrape } = require("./api.js");
 const { timeAnalysis } = require("./time-analysis.js");
 
 async function scrapeTest() {
-  const keyword = "helvetica";
+  const keyword = "merkle tree";
   const startDate = null;
   const endDate = null;
   try {

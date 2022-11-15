@@ -9,7 +9,8 @@ const PROXY_URL = "https://hidden-ocean-65167.herokuapp.com/";
 const HTTP_PORT = "localhost:3000";
 const HASHSCRAPPER = "http://www.hashscraper.com/api/twitter";
 const API_ERROR = `Error: Server error during API call,`
-  + `after ${ERROR_LIMIT} attempts.\nTry again later.`;
+  + ` after ${ERROR_LIMIT} attempt${ERROR_LIMIT === 1 ? '' : 's'}.`
+  + `\nTry again later.`;
 
 async function postCall(keyword, startDate, endDate, nextToken) {
   const body = JSON.stringify({
@@ -42,18 +43,24 @@ async function postCall(keyword, startDate, endDate, nextToken) {
 async function scrape(keyword, startDate, endDate) {
   let round = 1;
   let errorCount = 0;
+  let count = 0;
 
   // init round 1
   const initialResult = await postCall(keyword, startDate, endDate);
   let allTweets = [];
   allTweets.push(...initialResult.data);
   let nextToken = initialResult.next_token;
-  let count = allTweets.length;
+  if (allTweets.length === count) {
+    return [];
+  }
+
+  count = allTweets.length;
   console.log(`Round ${round}: ${count}`);
   console.log(allTweets);
 
   // subsequent rounds, if necessary
   while (nextToken && count < TOTAL_COUNT) {
+    sleep(ROUND_DELAY);
     try {
       const nextPage = await postCall(keyword, startDate, endDate, nextToken);
       allTweets.push(...nextPage.data);
@@ -61,7 +68,7 @@ async function scrape(keyword, startDate, endDate) {
       round++;
 
       // check if there are zero new tweets
-      if (allTweets.length == count) {
+      if (allTweets.length === count) {
         break;
       }
 
