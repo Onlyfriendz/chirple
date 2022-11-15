@@ -37,7 +37,7 @@ const DashBoard = (props) => {
           }
         } catch (error) {
           setLoading(false);
-          alert(error);
+          alert("Error: Server not responsive.\nPlease try again later.");
         }
     };
 
@@ -87,7 +87,7 @@ const DashBoard = (props) => {
 
       {loading ? (
         <Grid container item justifyContent="center" width={1200}>
-          <Typography variant="h3" padding={5} sx={{ fontSize: 30 }}>기다리세요 This may take up to 5mins ...</Typography>
+          <Typography variant="h3" padding={5} sx={{ fontSize: 30 }}>기다리세요. This may take up to 5mins ...</Typography>
           <Stack sx={{ width: '100%', color: 'grey.500' }} spacing={2}>
             <LinearProgress color="primary" />
           </Stack>
